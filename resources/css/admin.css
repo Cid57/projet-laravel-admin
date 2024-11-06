@@ -1,0 +1,136 @@
+/* Styles personnalisés */
+body {
+    background-color: #f4f6f9 !important;
+}
+.container {
+    max-width: 1200px !important;
+}
+h1 {
+    font-size: 2.5rem !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    margin-bottom: 20px !important;
+    text-align: center;
+}
+
+/* Boutons stylisés */
+.btn-primary,
+.btn-secondary {
+    background-color: #4a90e2 !important;
+    border-color: #4a90e2 !important;
+    font-weight: bold !important;
+    color: white !important;
+    border-radius: 30px !important;
+    padding: 10px 20px !important;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.btn-primary:hover,
+.btn-secondary:hover {
+    background-color: #357abd !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+.d-flex.gap-2 > * {
+    margin-left: 8px;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    border: none !important;
+    margin-bottom: 20px !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+}
+.card-header {
+    background-color: #4a90e2 !important;
+    color: white !important;
+    font-weight: bold !important;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    padding: 10px 15px !important;
+}
+.table-responsive {
+    overflow: hidden !important;
+    max-width: 1200px !important;
+}
+.table th,
+.table td {
+    vertical-align: middle !important;
+    padding: 15px !important;
+    text-align: center !important;
+}
+.table th {
+    background-color: #333 !important;
+    color: white !important;
+    font-size: 0.875rem !important;
+    text-transform: uppercase !important;
+    border-top: none !important;
+}
+.table td {
+    font-size: 0.875rem !important;
+}
+.btn-sm {
+    padding: 5px 10px !important;
+    font-size: 0.8rem !important;
+}
+.modal-header {
+    background-color: #4a90e2 !important;
+    color: white !important;
+}
+.modal-footer .btn {
+    min-width: 100px !important;
+}
+.form-label {
+    font-weight: bold !important;
+    color: #555 !important;
+}
+.alert-success {
+    font-size: 0.9rem !important;
+}
+
+/* Section d'information */
+.info-box {
+    background-color: #e9f7ff !important;
+    border-left: 4px solid #4a90e2 !important;
+    padding: 20px !important;
+    border-radius: 10px !important;
+    margin-top: 20px !important;
+    margin-bottom: 20px;
+    font-size: 1rem !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.info-box h5 {
+    font-weight: bold !important;
+    color: #333 !important;
+}
+.info-box p {
+    margin-bottom: 0 !important;
+    color: #555 !important;
+}
+
+/* Barre de recherche stylisée */
+#searchInput {
+    border-radius: 20px !important;
+    padding: 10px 20px !important;
+    border: 1px solid #ccc !important;
+    transition: box-shadow 0.3s;
+}
+#searchInput:focus {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    outline: none !important;
+}
+
+/* Section footer avec espacement */
+.footer {
+    background-color: #343a40 !important;
+    color: white !important;
+    padding: 20px 0 !important;
+    display: flex !important;
+    justify-content: space-around !important;
+
+    margin: auto !important;
+    text-align: center !important;
+    border-radius: 8px !important;
+}

@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-color: #f8f9fa !important;
+}
+
+.hero-section {
+    background: linear-gradient(to right, #6a11cb, #2575fc) !important;
+    color: white !important;
+    padding: 60px 0 !important;
+    text-align: center !important;
+}
+
+.hero-section h1 {
+    font-size: 3em !important;
+    font-weight: bold !important;
+    color: white !important;
+}
+
+.feature-card {
+    border: none !important;
+    transition: transform 0.3s !important;
+    height: 100% !important;
+}
+
+.feature-card:hover {
+    transform: scale(1.05) !important;
+}
+
+.feature-card img {
+    width: 100% !important;
+    height: 200px !important;
+    object-fit: cover !important;
+    border-radius: 5px !important;
+}
+
+/* Appliquer le flexbox à la page pour un footer en bas */
+.main-container {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;
+}
+
+.content {
+    flex: 1 !important;
+}
+
+.footer {
+    background-color: #343a40 !important;
+    color: white !important;
+    padding: 5px 0 !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    text-align: center !important;
+    border-radius: 8px !important;
+}
