@@ -1,64 +1,75 @@
 @extends('layouts.app')
-<style>
-    /* Boutons stylisés */
-.btn-primary,
-.btn-secondary {
-    background-color: #4a90e2 !important;
-    border-color: #4a90e2 !important;
-    font-weight: bold !important;
-    color: white !important;
-    border-radius: 30px !important;
-    padding: 10px 20px !important;
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-.btn-primary:hover,
-.btn-secondary:hover {
-    background-color: #357abd !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
-}
-</style>
+
+@section('title', 'Suivi des Activités')
+
 @section('content')
 <div class="container mt-5">
-    <h1 class="mb-4">Suivi des Activités</h1>
-    <a href="{{ route('activities.create') }}" class="btn btn-primary">Ajouter une Activité</a>
-    <button class="btn btn-secondary" onclick="window.location.href='{{ route('home') }}'">
-        <i class="fas fa-home me-2"></i> Retour à l'accueil
-    </button>
+    <h1 class="text-center">Suivi des Activités</h1>
 
-    <div class="card mt-4 shadow">
-        <div class="card-header bg-primary text-white">
-            Liste des Activités
-        </div>
-        <div class="card-body">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Description</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($activities as $activity)
-                    <tr>
-                        <td>{{ $activity->title }}</td>
-                        <td>{{ $activity->description }}</td>
-                        <td>{{ $activity->date }}</td>
-                        <td>
-                            <a href="{{ route('activities.show', $activity->id) }}" class="btn btn-info btn-sm">Voir</a>
-                            <a href="{{ route('activities.edit', $activity->id) }}" class="btn btn-warning btn-sm">Modifier</a>
-                            <form action="{{ route('activities.destroy', $activity->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+    <a href="{{ route('activities.create') }}" class="btn btn-primary mb-3">Ajouter une Activité</a>
+
+    <!-- Bouton de retour à l'accueil -->
+    <a href="{{ route('home') }}" class="btn btn-secondary mb-3">Retour à l'accueil</a>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($activities as $activity)
+                <tr>
+                    <td>{{ $activity->title }}</td>
+                    <td>{{ $activity->description }}</td>
+                    <td>{{ $activity->date }}</td>
+                    <td>
+                        <!-- Bouton Supprimer avec fonction confirmDelete -->
+                        <button onclick="confirmDelete({{ $activity->id }})" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteActivityModal">Supprimer</button>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal de Confirmation de Suppression -->
+<div class="modal fade" id="deleteActivityModal" tabindex="-1" aria-labelledby="deleteActivityModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteActivityModalLabel">Confirmer la Suppression</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer cette activité ? Cette action est irréversible.</p>
+            </div>
+            <div class="modal-footer">
+                <form id="deleteActivityForm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    function confirmDelete(activityId) {
+        const form = document.getElementById('deleteActivityForm');
+        if (form) {
+            form.action = `/activities/${activityId}`; // Définir l'URL pour la suppression de l'activité
+            $('#deleteActivityModal').modal('show'); // Ouvrir la modale
+        } else {
+            console.error("Le formulaire de suppression n'a pas été trouvé.");
+        }
+    }
+</script>
+
 @endsection

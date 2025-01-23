@@ -4,8 +4,10 @@
 @section('title', 'Créer une Nouvelle Activité')
 
 @section('content')
+
 <div class="container mt-5">
     <h1 class="text-center">Ajouter une Nouvelle Activité</h1>
+    <a href="{{ route('activities.index') }}" class="btn btn-secondary mb-3">Retour</a> 
 
     <form action="{{ route('activities.store') }}" method="POST">
         @csrf
@@ -28,3 +30,6 @@
     </form>
 </div>
 @endsection
+
+
+

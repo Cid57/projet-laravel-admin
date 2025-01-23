@@ -2,117 +2,110 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-    public function showAdminPage()
+    public function index()
     {
-        $users = User::paginate(10); // Affiche 10 utilisateurs par page
         $totalUsers = User::count();
+        $users = User::paginate(10);
         return view('admin', compact('users', 'totalUsers'));
+    }
+
+    public function users()
+    {
+        $totalUsers = User::count();
+        $users = User::paginate(10);
+        return view('admin.users', compact('users', 'totalUsers'));
+    }
+
+    public function activities()
+    {
+        return view('admin.activities');
+    }
+
+    public function settings()
+    {
+        return view('admin.settings');
     }
 
     public function addUser(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
-            'address' => 'nullable|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
             'phone' => 'nullable|string|max:20',
-            'postal_code' => 'nullable|string|max:20',
-            'city' => 'nullable|string|max:255',
-
+            'address' => 'nullable|string|max:255',
+            'postal_code' => 'nullable|string|max:10',
+            'city' => 'nullable|string|max:100',
         ]);
 
-        // Création de l'utilisateur
-        User::create([
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'address' => $request->address,
+            'password' => Hash::make($request->password),
             'phone' => $request->phone,
+            'address' => $request->address,
             'postal_code' => $request->postal_code,
             'city' => $request->city,
         ]);
 
-        return redirect()->route('admin.page')->with('success', 'Utilisateur ajouté avec succès!');
+        return redirect()->back()->with('success', 'Utilisateur ajouté avec succès !');
+    }
+
+    public function getUser($id)
+    {
+        $user = User::findOrFail($id);
+        return response()->json($user);
+    }
+
+    public function editUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+            'postal_code' => 'nullable|string|max:10',
+            'city' => 'nullable|string|max:100',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'postal_code' => $request->postal_code,
+            'city' => $request->city,
+        ]);
+
+        return redirect()->back()->with('success', 'Utilisateur modifié avec succès !');
     }
 
     public function deleteUser($id)
     {
-        // Trouver l'utilisateur par son ID et le supprimer
         $user = User::findOrFail($id);
         $user->delete();
 
-        // Rediriger avec un message de succès
-        return redirect()->route('admin.page')->with('success', 'Utilisateur supprimé avec succès!');
-    }
-
-    public function updateUser(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'address' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'postal_code' => 'nullable|string|max:20',
-            'city' => 'nullable|string|max:255',
-        ]);
-
-        $user = User::findOrFail($id);
-
-        // Mise à jour des informations de l'utilisateur
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'postal_code' => $request->postal_code,
-            'city' => $request->city,
-        ]);
-
-        return redirect()->route('admin.page')->with('success', 'Informations de l\'utilisateur mises à jour avec succès!');
-    }
-
-    public function showUserProfile($id)
-    {
-        $user = User::findOrFail($id);
-        return view('user-profile', compact('user'));
-    }
-
-    public function editUserProfile($id)
-    {
-        $user = User::findOrFail($id);
-        return view('user-profile', compact('user'));
-    }
-
-    public function updateUserProfile(Request $request, $id)
-    {
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'address' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'postal_code' => 'nullable|string|max:20',
-            'city' => 'nullable|string|max:255',
-        ]);
-
-        $user = User::findOrFail($id);
-
-        // Mise à jour des informations de l'utilisateur
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'postal_code' => $request->postal_code,
-            'city' => $request->city,
-        ]);
-
-        return redirect()->route('admin.userProfile', $user->id)->with('success', 'Profil mis à jour avec succès !');
+        return redirect()->back()->with('success', 'Utilisateur supprimé avec succès !');
     }
 }
