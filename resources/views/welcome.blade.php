@@ -13,13 +13,7 @@
             <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed font-light">
                 Votre outil ultime de gestion et d'administration
             </p>
-            <div class="mt-10 flex justify-center gap-x-6">
-                <a href="{{ route('admin.dashboard') }}" class="rounded-lg px-6 py-3 bg-indigo-600 text-white font-medium hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-200 shadow-lg shadow-indigo-500/25">
-                    Commencer maintenant
-                </a>
-                <a href="#features" class="rounded-lg px-6 py-3 text-slate-300 font-medium hover:bg-white/10 transition-all duration-200">
-                    En savoir plus
-                </a>
+           
             </div>
         </div>
     </div>
@@ -40,78 +34,87 @@
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Carte Gestion des Utilisateurs -->
-            <div class="group relative">
-                <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 to-slate-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="relative p-6">
-                        <div class="aspect-w-16 aspect-h-9 mb-6 overflow-hidden rounded-xl">
-                            <img src="{{ asset('images/image1.webp') }}" 
-                                 class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500" 
-                                 alt="Gestion des Utilisateurs">
+            <div class="group h-full">
+                <div class="h-full bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                    <div class="flex flex-col h-full">
+                        <div class="p-6">
+                            <div class="h-48 w-full mb-6 overflow-hidden rounded-xl">
+                                <img src="{{ asset('images/image1.webp') }}" 
+                                     class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500" 
+                                     alt="Gestion des Utilisateurs">
+                            </div>
+                            <h3 class="text-xl font-semibold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">
+                                Gestion des Utilisateurs
+                            </h3>
+                            <p class="text-slate-600 flex-grow">
+                                Gérez efficacement les utilisateurs avec des options de tri, de modification et de suppression.
+                            </p>
                         </div>
-                        <h3 class="text-xl font-semibold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">
-                            Gestion des Utilisateurs
-                        </h3>
-                        <p class="text-slate-600">
-                            Gérez efficacement les utilisateurs avec des options de tri, de modification et de suppression.
-                        </p>
-                        <div class="mt-6 flex items-center text-indigo-600">
-                            <span class="text-sm font-medium">En savoir plus</span>
-                            <svg class="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
+                        <div class="mt-auto p-6 pt-0">
+                            <a href="{{ route('admin.dashboard') }}" class="group-hover:text-indigo-700 flex items-center text-indigo-600">
+                                <span class="text-sm font-medium">Commencer maintenant</span>
+                                <svg class="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Carte Suivi des Activités -->
-            <div class="group relative">
-                <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                    <div class="absolute inset-0 bg-gradient-to-br from-cyan-50 to-slate-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="relative p-6">
-                        <div class="aspect-w-16 aspect-h-9 mb-6 overflow-hidden rounded-xl">
-                            <img src="{{ asset('images/image2.avif') }}" 
-                                 class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500" 
-                                 alt="Suivi des Activités">
+            <div class="group h-full">
+                <div class="h-full bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                    <div class="flex flex-col h-full">
+                        <div class="p-6">
+                            <div class="h-48 w-full mb-6 overflow-hidden rounded-xl">
+                                <img src="{{ asset('images/image2.avif') }}" 
+                                     class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500" 
+                                     alt="Suivi des Activités">
+                            </div>
+                            <h3 class="text-xl font-semibold text-slate-900 mb-3 group-hover:text-cyan-600 transition-colors">
+                                Suivi des Activités
+                            </h3>
+                            <p class="text-slate-600 flex-grow">
+                                Gardez un œil sur les activités importantes et les mises à jour en temps réel.
+                            </p>
                         </div>
-                        <h3 class="text-xl font-semibold text-slate-900 mb-3 group-hover:text-cyan-600 transition-colors">
-                            Suivi des Activités
-                        </h3>
-                        <p class="text-slate-600">
-                            Gardez un œil sur les activités importantes et les mises à jour en temps réel.
-                        </p>
-                        <div class="mt-6 flex items-center text-cyan-600">
-                            <span class="text-sm font-medium">En savoir plus</span>
-                            <svg class="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
+                        <div class="mt-auto p-6 pt-0">
+                            <div class="flex items-center text-cyan-600">
+                                <span class="text-sm font-medium">En savoir plus</span>
+                                <svg class="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Carte Statistiques -->
-            <div class="group relative">
-                <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                    <div class="absolute inset-0 bg-gradient-to-br from-purple-50 to-slate-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="relative p-6">
-                        <div class="aspect-w-16 aspect-h-9 mb-6 overflow-hidden rounded-xl">
-                            <img src="{{ asset('images/image3.png') }}" 
-                                 class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500" 
-                                 alt="Statistiques & Rapports">
+            <div class="group h-full">
+                <div class="h-full bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                    <div class="flex flex-col h-full">
+                        <div class="p-6">
+                            <div class="h-48 w-full mb-6 overflow-hidden rounded-xl">
+                                <img src="{{ asset('images/image3.png') }}" 
+                                     class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500" 
+                                     alt="Statistiques & Rapports">
+                            </div>
+                            <h3 class="text-xl font-semibold text-slate-900 mb-3 group-hover:text-purple-600 transition-colors">
+                                Statistiques & Rapports
+                            </h3>
+                            <p class="text-slate-600 flex-grow">
+                                Accédez à des analyses détaillées et générez des rapports personnalisés.
+                            </p>
                         </div>
-                        <h3 class="text-xl font-semibold text-slate-900 mb-3 group-hover:text-purple-600 transition-colors">
-                            Statistiques & Rapports
-                        </h3>
-                        <p class="text-slate-600">
-                            Accédez à des analyses détaillées et générez des rapports personnalisés.
-                        </p>
-                        <div class="mt-6 flex items-center text-purple-600">
-                            <span class="text-sm font-medium">En savoir plus</span>
-                            <svg class="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
+                        <div class="mt-auto p-6 pt-0">
+                            <div class="flex items-center text-purple-600">
+                                <span class="text-sm font-medium">En savoir plus</span>
+                                <svg class="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </div>

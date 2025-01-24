@@ -1,109 +1,105 @@
 @extends('layouts.admin')
 
 @section('title', 'Tableau de Bord Admin')
-
 @section('header_title', 'Tableau de Bord')
 
 @section('content')
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        <div class="stat-card">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <!-- Total Utilisateurs -->
+        <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
             <div class="flex items-center">
-                <div class="rounded-full bg-blue-500 p-3">
-                    <i class="fas fa-users text-white text-xl"></i>
+                <div class="flex-shrink-0">
+                    <div class="p-3 bg-indigo-500 rounded-full">
+                        <i class="fas fa-users text-white text-xl"></i>
+                    </div>
                 </div>
-                <div class="ml-4">
-                    <h3 class="text-gray-500 text-sm">Total Utilisateurs</h3>
-                    <p class="text-2xl font-bold">{{ $totalUsers }}</p>
+                <div class="ml-5">
+                    <h3 class="text-sm font-medium text-slate-600">Total Utilisateurs</h3>
+                    <p class="text-2xl font-bold text-slate-900">{{ $totalUsers }}</p>
                 </div>
             </div>
         </div>
         
-        <div class="stat-card">
+        <!-- Activités Actives -->
+        <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
             <div class="flex items-center">
-                <div class="rounded-full bg-green-500 p-3">
-                    <i class="fas fa-calendar-check text-white text-xl"></i>
+                <div class="flex-shrink-0">
+                    <div class="p-3 bg-emerald-500 rounded-full">
+                        <i class="fas fa-calendar-check text-white text-xl"></i>
+                    </div>
                 </div>
-                <div class="ml-4">
-                    <h3 class="text-gray-500 text-sm">Activités Actives</h3>
-                    <p class="text-2xl font-bold">0</p>
+                <div class="ml-5">
+                    <h3 class="text-sm font-medium text-slate-600">Activités Actives</h3>
+                    <p class="text-2xl font-bold text-slate-900">0</p>
                 </div>
             </div>
         </div>
         
-        <div class="stat-card">
+        <!-- En attente -->
+        <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
             <div class="flex items-center">
-                <div class="rounded-full bg-yellow-500 p-3">
-                    <i class="fas fa-clock text-white text-xl"></i>
+                <div class="flex-shrink-0">
+                    <div class="p-3 bg-amber-500 rounded-full">
+                        <i class="fas fa-clock text-white text-xl"></i>
+                    </div>
                 </div>
-                <div class="ml-4">
-                    <h3 class="text-gray-500 text-sm">En attente</h3>
-                    <p class="text-2xl font-bold">0</p>
+                <div class="ml-5">
+                    <h3 class="text-sm font-medium text-slate-600">En attente</h3>
+                    <p class="text-2xl font-bold text-slate-900">0</p>
                 </div>
             </div>
         </div>
         
-        <div class="stat-card">
+        <!-- Alertes -->
+        <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
             <div class="flex items-center">
-                <div class="rounded-full bg-red-500 p-3">
-                    <i class="fas fa-exclamation-circle text-white text-xl"></i>
+                <div class="flex-shrink-0">
+                    <div class="p-3 bg-rose-500 rounded-full">
+                        <i class="fas fa-exclamation-circle text-white text-xl"></i>
+                    </div>
                 </div>
-                <div class="ml-4">
-                    <h3 class="text-gray-500 text-sm">Alertes</h3>
-                    <p class="text-2xl font-bold">0</p>
+                <div class="ml-5">
+                    <h3 class="text-sm font-medium text-slate-600">Alertes</h3>
+                    <p class="text-2xl font-bold text-slate-900">0</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Users Table Section -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-bold">Gestion des Utilisateurs</h2>
-            <button onclick="openAddUserModal()" class="btn-custom bg-blue-500 text-white hover:bg-blue-600">
-                <i class="fas fa-plus mr-2"></i> Ajouter un Utilisateur
-            </button>
+    <!-- Recent Activity & Quick Actions -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Recent Activity -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-slate-900 mb-4">Activité Récente</h3>
+            <div class="space-y-4">
+                <div class="flex items-center p-4 bg-slate-50 rounded-lg">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                            <i class="fas fa-user-plus text-indigo-600"></i>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-slate-900">Nouvel utilisateur inscrit</p>
+                        <p class="text-sm text-slate-500">Il y a 2 heures</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="custom-table w-full">
-                <thead>
-                    <tr>
-                        <th class="text-left">Nom</th>
-                        <th class="text-left">Email</th>
-                        <th class="text-left">Téléphone</th>
-                        <th class="text-left">Ville</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $user)
-                    <tr class="hover:bg-gray-50">
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->phone ?? 'Non renseigné' }}</td>
-                        <td>{{ $user->city ?? 'Non renseigné' }}</td>
-                        <td class="text-center">
-                            <button onclick="openEditUserModal({{ $user->id }})" class="btn-custom bg-yellow-500 text-white hover:bg-yellow-600">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button onclick="openDeleteUserModal({{ $user->id }})" class="btn-custom bg-red-500 text-white hover:bg-red-600 ml-2">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
-        <div class="mt-4">
-            {{ $users->links() }}
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-slate-900 mb-4">Actions Rapides</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <a href="{{ route('admin.users') }}" class="flex items-center p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                    <i class="fas fa-user-plus text-indigo-600 mr-3"></i>
+                    <span class="text-sm font-medium text-slate-900">Ajouter un utilisateur</span>
+                </a>
+                <a href="{{ route('activities.index') }}" class="flex items-center p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                    <i class="fas fa-calendar-plus text-emerald-600 mr-3"></i>
+                    <span class="text-sm font-medium text-slate-900">Créer une activité</span>
+                </a>
+            </div>
         </div>
     </div>
-
-    <!-- Modals -->
-    @include('components.modals.add-user')
-    @include('components.modals.edit-user')
-    @include('components.modals.delete-user')
 @endsection
