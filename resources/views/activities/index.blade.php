@@ -1,75 +1,82 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Suivi des Activités')
+@section('title', 'Gestion des Activités')
+@section('header_title', 'Gestion des Activités')
 
 @section('content')
-<div class="container mt-5">
-    <h1 class="text-center">Suivi des Activités</h1>
-
-    <a href="{{ route('activities.create') }}" class="btn btn-primary mb-3">Ajouter une Activité</a>
-
-    <!-- Bouton de retour à l'accueil -->
-    <a href="{{ route('home') }}" class="btn btn-secondary mb-3">Retour à l'accueil</a>
-
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($activities as $activity)
-                <tr>
-                    <td>{{ $activity->title }}</td>
-                    <td>{{ $activity->description }}</td>
-                    <td>{{ $activity->date }}</td>
-                    <td>
-                        <!-- Bouton Supprimer avec fonction confirmDelete -->
-                        <button onclick="confirmDelete({{ $activity->id }})" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteActivityModal">Supprimer</button>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-
-<!-- Modal de Confirmation de Suppression -->
-<div class="modal fade" id="deleteActivityModal" tabindex="-1" aria-labelledby="deleteActivityModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteActivityModalLabel">Confirmer la Suppression</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Êtes-vous sûr de vouloir supprimer cette activité ? Cette action est irréversible.</p>
-            </div>
-            <div class="modal-footer">
-                <form id="deleteActivityForm" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                </form>
-            </div>
-        </div>
+    <div class="mb-6 flex justify-between items-center">
+        <h2 class="text-xl font-bold text-slate-800">Liste des activités</h2>
+        <a href="{{ route('activities.create') }}" 
+           class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+            <i class="fas fa-plus mr-2"></i>
+            Nouvelle activité
+        </a>
     </div>
-</div>
 
-<script>
-    function confirmDelete(activityId) {
-        const form = document.getElementById('deleteActivityForm');
-        if (form) {
-            form.action = `/activities/${activityId}`; // Définir l'URL pour la suppression de l'activité
-            $('#deleteActivityModal').modal('show'); // Ouvrir la modale
-        } else {
-            console.error("Le formulaire de suppression n'a pas été trouvé.");
-        }
-    }
-</script>
+    <!-- Liste des activités -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @forelse($activities as $activity)
+            <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-slate-900">{{ $activity->title }}</h3>
+                        <span class="px-3 py-1 text-sm rounded-full {{ $activity->status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-700' }}">
+                            {{ ucfirst($activity->status) }}
+                        </span>
+                    </div>
+                    
+                    <p class="text-slate-600 mb-4 line-clamp-3">{{ $activity->description }}</p>
+                    
+                    <div class="flex items-center text-sm text-slate-500 mb-4">
+                        <i class="far fa-calendar mr-2"></i>
+                        <span>{{ \Carbon\Carbon::parse($activity->date)->format('d/m/Y') }}</span>
+                    </div>
 
+                    <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                        <div class="flex space-x-2">
+                            <a href="{{ route('activities.edit', $activity->id) }}" 
+                               class="p-2 text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form action="{{ route('activities.destroy', $activity->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="p-2 text-rose-600 hover:text-rose-700 transition-colors" 
+                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette activité ?')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <a href="{{ route('activities.show', $activity->id) }}" 
+                           class="text-sm text-indigo-600 hover:text-indigo-700 font-medium transition-colors">
+                            Voir les détails
+                            <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="col-span-full">
+                <div class="text-center py-12 bg-white rounded-xl">
+                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-calendar-plus text-slate-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-slate-900 mb-2">Aucune activité</h3>
+                    <p class="text-slate-500 mb-6">Commencez par créer votre première activité</p>
+                    <a href="{{ route('activities.create') }}" 
+                       class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>
+                        Nouvelle activité
+                    </a>
+                </div>
+            </div>
+        @endforelse
+    </div>
+
+    @if($activities->isNotEmpty())
+        <!-- Pagination -->
+        <div class="mt-6">
+            {{ $activities->links() }}
+        </div>
+    @endif
 @endsection
